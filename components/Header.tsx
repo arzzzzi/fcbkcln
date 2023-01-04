@@ -26,11 +26,11 @@ function Header() {
       </div>
       <div className="flex justify-center flex-grow">
         <div className="flex space-x-6 md:space-x-2">
-          <HeaderIcon active={true} Icon={HomeIcon} />
-          <HeaderIcon active={false} Icon={FlagIcon} />
-          <HeaderIcon active={false} Icon={PlayIcon} />
-          <HeaderIcon active={false} Icon={ShoppingCartIcon} />
-          <HeaderIcon active={false} Icon={UserGroupIcon} />
+          <HeaderIcon active Icon={HomeIcon} />
+          <HeaderIcon Icon={FlagIcon} />
+          <HeaderIcon Icon={PlayIcon} />
+          <HeaderIcon Icon={ShoppingCartIcon} />
+          <HeaderIcon Icon={UserGroupIcon} />
         </div>
       </div>
       <div className="flex items-center sm:space-x-2 justify-end">

@@ -1,8 +1,6 @@
-import React from 'react';
-
 interface Props {
   Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
-  active: boolean;
+  active?: boolean;
 }
 
 function HeaderIcon({ Icon, active }: Props) {
