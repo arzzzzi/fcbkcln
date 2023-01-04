@@ -1,9 +1,4 @@
-interface Props {
-  Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
-  active?: boolean;
-}
-
-function HeaderIcon({ Icon, active }: Props) {
+function HeaderIcon({ Icon, active }) {
   return (
     <div className="flex rounded-xl items-center group cursor-pointer md:px-10 sm:h-14 md:hover:bg-gray-100 active:border-b-2 active:border-blue-500 ">
       <Icon

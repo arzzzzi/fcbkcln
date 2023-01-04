@@ -1,15 +1,11 @@
-import { Session } from 'inspector';
-import { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import Header from '../components/Header';
+import Login from '../components/Login';
 
-interface ISession {
-  session: Promise<Session | null>;
-}
-
-export default function Home({ session }: ISession) {
+export default function Home({ session }) {
   if (!session) return <Login />;
+
   return (
     <div>
       <Head>
@@ -25,7 +21,7 @@ export default function Home({ session }: ISession) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps = async (context) => {
   const session = await getSession(context);
 
   return {
