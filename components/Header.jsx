@@ -9,8 +9,11 @@ import {
 } from '@heroicons/react/solid';
 import { FlagIcon, PlayIcon, SearchIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import HeaderIcon from './HeaderIcon';
+import { useSession, signOut } from 'next-auth/react';
 
 function Header() {
+  const { data: session, status } = useSession();
+
   return (
     <div className="sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md">
       <div className="flex items-center">
@@ -34,6 +37,14 @@ function Header() {
         </div>
       </div>
       <div className="flex items-center sm:space-x-2 justify-end">
+        <Image
+          onClick={() => signOut()}
+          className="cursor-pointer rounded-full"
+          src={session.user.image}
+          width={40}
+          height={40}
+          alt="profile photo"
+        />
         <p className="font-semibold pr-3 whitespace-nowrap">Maga Kantyshev</p>
         <ViewGridIcon className="icon" />
         <ChatIcon className="icon" />

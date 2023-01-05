@@ -1,11 +1,12 @@
-import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import Header from '../components/Header';
 import Login from '../components/Login';
+import Sidebar from '../components/Sidebar';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from './api/auth/[...nextauth]';
 
 export default function Home({ session }) {
-  if (!session) return <Login />;
-
+  // if (!session) return <Login />;
   return (
     <div>
       <Head>
@@ -13,7 +14,7 @@ export default function Home({ session }) {
       </Head>
       <Header />
       <main>
-        {/* Sidebar */}
+        <Sidebar />
         {/* Feed */}
         {/* Widgets */}
       </main>
@@ -21,12 +22,21 @@ export default function Home({ session }) {
   );
 }
 
-export const getServerSideProps = async (context) => {
-  const session = await getSession(context);
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(context.req, context.res, authOptions);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {
       session,
     },
   };
-};
+}
