@@ -6,16 +6,16 @@ import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from './api/auth/[...nextauth]';
 
 export default function Home({ session }) {
-  // if (!session) return <Login />;
+  if (!session) return <Login />;
   return (
-    <div>
+    <div className="h-screen overflow-hidden bg-gray-100">
       <Head>
         <title>Facebook</title>
       </Head>
       <Header />
-      <main>
+      <main className="flex">
         <Sidebar />
-        {/* Feed */}
+        <Feed />
         {/* Widgets */}
       </main>
     </div>

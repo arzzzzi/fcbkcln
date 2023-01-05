@@ -45,7 +45,7 @@ function Header() {
           height={40}
           alt="profile photo"
         />
-        <p className="font-semibold pr-3 whitespace-nowrap">Maga Kantyshev</p>
+        <p className="font-semibold pr-3 whitespace-nowrap">{session.user.name}</p>
         <ViewGridIcon className="icon" />
         <ChatIcon className="icon" />
         <BellIcon className="icon" />
