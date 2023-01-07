@@ -8,7 +8,6 @@ function StoryCard({ name, src, profile }) {
         src={profile}
         width={40}
         height={40}
-        fixed
       />
       <Image
         className="object-cover filter brightness-75 rounded-full lg:rounded-3xl"
