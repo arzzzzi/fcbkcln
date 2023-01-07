@@ -32,6 +32,7 @@ function InputBox() {
             setDoc(doc(db, 'posts', doc.id)), { postImage: URL }, { merge: true };
           });
         });
+        removeImage();
       }
     });
     inputRef.current.value = '';
