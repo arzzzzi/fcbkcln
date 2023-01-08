@@ -8,11 +8,13 @@ function StoryCard({ name, src, profile }) {
         src={profile}
         width={40}
         height={40}
+        alt="lol"
       />
       <Image
         className="object-cover filter brightness-75 rounded-full lg:rounded-3xl"
         src={src}
         fill
+        alt="2lol"
       />
       <p className="absolute opacity-0 lg:opacity-100 bottom-4 w-5/6 text-white text-sm font-bold truncate">
         {name}

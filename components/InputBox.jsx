@@ -29,7 +29,7 @@ function InputBox() {
         const storageRef = ref(storage, `posts/${doc.id}`);
         uploadString(storageRef, postImage, 'data_url').then((snapshot) => {
           getDownloadURL(snapshot.ref).then((URL) => {
-            setDoc(doc(db, 'posts', doc.id)), { postImage: URL }, { merge: true };
+            setDoc(collection(db, 'posts', doc.id)), { postImage: URL }, { merge: true };
           });
         });
         removeImage();
