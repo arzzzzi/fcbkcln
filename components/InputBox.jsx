@@ -11,7 +11,7 @@ function InputBox() {
   const { data: session } = useSession();
   const inputRef = useRef(null);
   const filepickerRef = useRef(null);
-  const [postImage, setPostImage] = useState(null);
+  const [imageToPost, setImageToPost] = useState(null);
 
   const sendPost = async (e) => {
     e.preventDefault();
@@ -25,11 +25,11 @@ function InputBox() {
       image: session.user.image,
       timestamp: serverTimestamp(),
     }).then((doc) => {
-      if (postImage) {
+      if (imageToPost) {
         const storageRef = ref(storage, `posts/${doc.id}`);
-        uploadString(storageRef, postImage, 'data_url').then((snapshot) => {
+        uploadString(storageRef, imageToPost, 'data_url').then((snapshot) => {
           getDownloadURL(snapshot.ref).then((URL) => {
-            setDoc(collection(db, 'posts', doc.id)), { postImage: URL }, { merge: true };
+            addDoc(collection(db, 'posts', doc.id)), { postImage: URL }, { merge: true };
           });
         });
         removeImage();
@@ -44,12 +44,12 @@ function InputBox() {
       reader.readAsDataURL(e.target.files[0]);
     }
     reader.onload = (removeEvent) => {
-      setPostImage(removeEvent.target.result);
+      setImageToPost(removeEvent.target.result);
     };
   };
 
   const removeImage = () => {
-    setPostImage(null);
+    setImageToPost(null);
   };
 
   return (
@@ -67,11 +67,11 @@ function InputBox() {
             Submit
           </button>
         </form>
-        {postImage && (
+        {imageToPost && (
           <div
             onClick={removeImage}
             className="flex flex-col filter hover:brightness-110 transition duration-150 transform hover:scale-105 cursor-pointer">
-            <img className="object-contain h-10" src={postImage} alt="" />
+            <img className="object-contain h-10" src={imageToPost} alt="" />
             <p className="text-xs text-red-500 text-center">Remove</p>
           </div>
         )}

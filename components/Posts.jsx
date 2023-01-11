@@ -1,10 +1,10 @@
 import { collection, orderBy, query } from 'firebase/firestore';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
 import Post from './Post';
 import { db } from '../firebase';
 
 function Posts() {
-  const [realtimePosts] = useCollectionData(
+  const [realtimePosts] = useCollection(
     query(collection(db, 'posts'), orderBy('timestamp', 'desc')),
   );
 
@@ -13,15 +13,15 @@ function Posts() {
   return (
     <div>
       {realtimePosts &&
-        realtimePosts?.map((post) => (
+        realtimePosts?.docs.map((post) => (
           <Post
             key={post.id}
-            name={post.name}
-            message={post.message}
-            email={post.email}
-            timestamp={post.timestamp}
-            image={post.image}
-            postImage={post.postImage}
+            name={post.data().name}
+            message={post.data().message}
+            email={post.data().email}
+            timestamp={post.data().timestamp}
+            image={post.data().image}
+            postImage={post.data().postImage}
           />
         ))}
     </div>
