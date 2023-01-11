@@ -5,6 +5,7 @@ import Sidebar from '../components/Sidebar';
 import Feed from '../components/Feed';
 import { getSession } from 'next-auth/react';
 import { db } from '../firebase';
+import Widgets from '../components/Widgets';
 
 export default function Home({ session, posts }) {
   // if (!session) return <Login />;
@@ -17,7 +18,7 @@ export default function Home({ session, posts }) {
       <main className="flex">
         <Sidebar />
         <Feed />
-        {/* Widgets */}
+        <Widgets />
       </main>
     </div>
   );
