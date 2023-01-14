@@ -12,7 +12,9 @@ import HeaderIcon from './HeaderIcon';
 import { useSession, signOut } from 'next-auth/react';
 
 function Header() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+
+  console.log(session);
 
   return (
     <div className="sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md">

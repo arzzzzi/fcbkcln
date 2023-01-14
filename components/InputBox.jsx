@@ -2,10 +2,10 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
-import { db, storage } from '../firebase';
+import { db } from '../firebase';
 import { useRef, useState } from 'react';
-import { collection, serverTimestamp, addDoc, setDoc } from 'firebase/firestore';
-import { ref, getDownloadURL, uploadString } from 'firebase/storage';
+import { collection, serverTimestamp, addDoc, setDoc, doc } from 'firebase/firestore';
+import { ref, getDownloadURL, uploadString, getStorage } from 'firebase/storage';
 
 function InputBox() {
   const { data: session } = useSession();
@@ -15,26 +15,28 @@ function InputBox() {
 
   const sendPost = async (e) => {
     e.preventDefault();
-
     if (!inputRef.current.value) return;
 
-    await addDoc(collection(db, 'posts'), {
+    addDoc(collection(db, 'posts'), {
       message: inputRef.current.value,
       name: session.user.name,
       email: session.user.email,
       image: session.user.image,
       timestamp: serverTimestamp(),
-    }).then((doc) => {
+    }).then((docum) => {
       if (imageToPost) {
-        const storageRef = ref(storage, `posts/${doc.id}`);
+        const storage = getStorage();
+        const storageRef = ref(storage, `posts/${docum.id}`);
         uploadString(storageRef, imageToPost, 'data_url').then((snapshot) => {
           getDownloadURL(snapshot.ref).then((URL) => {
-            addDoc(collection(db, 'posts', doc.id)), { postImage: URL }, { merge: true };
+            setDoc(doc(db, 'posts', docum.id), { postImage: URL }, { merge: true });
+            console.log('File available at ', URL);
           });
+          removeImage();
         });
-        removeImage();
       }
     });
+
     inputRef.current.value = '';
   };
 
@@ -55,7 +57,13 @@ function InputBox() {
   return (
     <div className="bg-white p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6">
       <div className="flex space-x-4 p-4 items-center">
-        <Image className="rounded-full" src={session.user.image} width={40} height={40} />
+        <Image
+          className="rounded-full"
+          src={session.user.image}
+          width={40}
+          height={40}
+          alt="photo"
+        />
         <form className="flex flex-1">
           <input
             className="rounded-full h-12 bg-gray-100 flex-grow px-5 outline-none"
